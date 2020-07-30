@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .carousel{
+            margin: 50px auto;
+            width: 560px;
+			height: 300px;
+            position: relative;
+        }
+        .btns a{
+            width: 50px;
+            height: 50px;
+            background-color: yellowgreen;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            margin-top: -25px;
+            z-index: 1000;
+            cursor: pointer;
+            opacity: 0.5;
+
+        }
+        .btns a.leftBtn{
+            left: 20px;
+        }
+        .btns a.rightBtn{
+            right: 20px;
+        }
+        .img ul{
+            list-style: none;
+        }
+        .img ul li{
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            filter: alpha(opacity = 0);
+        }
+        .img ul li.first{
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 1;
+            filter: alpha(opacity = 100);
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel" id="carousel">
+        <div class="btns">
+            <a class="leftBtn"  id="leftBtn"></a>
+            <a class="rightBtn" id="rightBtn"></a>
+        </div>
+        <div class="img" id="imgbox">
+            <ul>
+                <li class="first"><img src="../images/0.jpg" alt=""></li>
+                <li><img src="../images/1.jpg" alt=""></li>
+                <li><img src="../images/2.jpg" alt=""></li>
+                <li><img src="../images/3.jpg" alt=""></li>
+                <li><img src="../images/4.jpg" alt=""></li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="../运动框架/myanimate-1.1.js"></script>
+    <script type="text/javascript" src="../运动框架/tween.js"></script>
+    <script type="text/javascript">
+        var imgbox =  document.getElementById("carousel");
+        var ul = document.getElementsByTagName("ul")[0];
+        var imglist = ul.getElementsByTagName("li");
+        var imglen = imglist.length - 1;
+        var leftbtn = document.getElementById("leftBtn");
+        var rightbtn = document.getElementById("rightBtn");
+
+        var index = 0;
+
+        function move(){
+            if(imglist[index].isanimated) return;
+            animate(imglist[index],{"opacity": 0},1000);
+            index++;
+            if(index>imglen)
+            {
+                index = 0;
+            }
+            animate(imglist[index],{"opacity": 1},1000);
+        }
+
+        leftbtn.onclick = function(){
+            if(imglist[index].isanimated)
+            {
+                alert(imglist[index].isanimated);
+                return;
+            } 
+            animate(imglist[index],{"opacity": 0},1000);
+            index--;
+            if(index<0)
+            {
+                index = imglen;
+            }
+            animate(imglist[index],{"opacity": 1},1000);
+
+        }
+        rightbtn.onclick = function(){
+            if(imglist[index].isanimated) return;
+            animate(imglist[index],{"opacity": 0},1000);
+            index++;
+            if(index>imglen)
+            {
+                index = 0;
+            }
+            animate(imglist[index],{"opacity": 1},1000);
+        }
+
+        //自动轮播
+        var timer;
+        imgbox.onmouseout = function(){
+			timer = setInterval(move,4000);
+        }
+        imgbox.onmouseover = function(){
+			clearInterval(timer);
+		}
+    </script>
+</body>
+</html>

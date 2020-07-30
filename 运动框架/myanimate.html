@@ -4,13 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>myanimate</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box1{
+            height: 100px;
+            width: 100px;
+            background-color: red;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity:1;
+        }
+        .box2{
+            height: 100px;
+            width: 100px;
+            background-color: yellow;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity:1;
+        }
+        .box3{
+            height: 100px;
+            width: 100px;
+            background-color: green;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity:1;
+        }
+    </style>
 </head>
 <body>
-    <div class="box1"></div>
-    <div class="box2"></div>
-    <div class="box3"></div>
+    <div class="box1" id="box1"></div>
+    <div class="box2" id="box2"></div>
+    <div class="box3" id="box3"></div>
+    
     <script type="text/javascript">
+        //js原生
+        var b1 = document.getElementById("box1");
+        var b2 = document.getElementById("box2");
+        var b3 = document.getElementById("box3");
 
+        var targetJsonB1 = {"left":100,"top":200,"opacity":0.5};
+        var targetJsonB2 = {"left":500,"top":300,"opacity":0.5};
+        var targetJsonB3 = {"left":1000,"top":400,"opacity":0.5};
+
+        animate(b1,{"left":100,"top":200,"opacity":0.5},1000);
+        animate(b2,targetJsonB2,3000);
+        animate(b3,targetJsonB3,6000);
+        function animate(element,targetJson,time){
+            if(window.navigator.userAgent.indexOf("MSIE")!=-1) //IE11已经没有MSIE关键字了
+            {
+                var interval = 50;
+            }else{
+                var interval = 10;
+            }
+            //目标json   样式初始值json   步长json
+            var cssJson = {};
+
+            for(var k in targetJson)//遍历目标json 提取css对应得初始值json
+            {
+                cssJson[k] = parseFloat(myfetchComputedStyle(element,k));
+            }
+            var stepJson = {};
+            var maxcount = time/interval;
+            for(var k in targetJson)
+            {
+                stepJson[k] = parseFloat((targetJson[k] - cssJson[k])/maxcount);
+            }
+
+            var count=0;//计算运动步数
+            var timer = setInterval(function(){
+                count++;
+                for(var k in targetJson)
+                {
+                    cssJson[k] += stepJson[k];
+                    if(k!="opacity")
+                    {
+                        element.style[k] = cssJson[k] + "px";
+                    }else{
+                        element.style[k] = targetJson[k];
+                        element.style.filter = "alpha(opacity" + targetJson[k]*100 + ")";
+                    }
+                }
+                if(count == maxcount)
+                {
+                    if(k!="opacity")
+                    {
+                        element.style[k] = targetJson[k] + "px";
+                    }else{
+                        element.style[k] = targetJson[k];
+                        element.style.filter = "alpha(opacity" + targetJson[k]*100 + ")";
+                    }
+                    clearInterval(timer);
+                }
+            },interval)
+            //获取css计算后样式
+            function myfetchComputedStyle(element,cssstyle){
+                //检测是否为IE浏览器 IE不支持getComputedStyle
+                if(window.getComputedStyle)
+                {
+                    //正则表达式 检测样式名称 是否为驼峰写法
+                    cssstyle = cssstyle.replace(/([A-Z])/g,function(match,$1){
+                        return "-" + $1.toLowerCase();
+                    });
+                    return window.getComputedStyle(element)[cssstyle];
+                }else{
+                    cssstyle = cssstyle.replace(/\-([a-z])/g,function(match,$1){
+                        return $1.toUpperCase();
+                    });
+                    return element.currentStyle[cssstyle];
+                }
+            }
+        }
     </script>
 </body>
 </html>

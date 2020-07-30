@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: greenyellow;
+            position : absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+<body>
+    <div class="box1" id="box1"></div>
+    <div class="box2" id="box2"></div>
+    <div class="box3" id="box3"></div>
+    <div class="box4" id="box4"></div>
+    <script type="text/javascript" src="../运动框架/myanimate-1.1.js"></script>
+    <script type="text/javascript" src="../运动框架/tween.js"></script>
+    <script type="text/javascript">
+        var box1 = document.getElementById("box1");
+        animate(box1,{"left":500,"top":300,"opacity":0.5},5000,"QuartEaseIn",function(){});
+        animate(box2,{"left":500,"top":500,"opacity":0.5},6000,"SineEaseIn",function(){});
+        animate(box3,{"left":500,"top":700,"opacity":0.5},7000,"CubicEaseInOut",function(){});
+        animate(box4,{"left":500,"top":900,"opacity":0.5},9000,"QuadEaseInOut",function(){});
+    </script>
+</body>
+</html>

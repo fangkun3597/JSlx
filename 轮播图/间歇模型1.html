@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box1{
+            width: 500px;
+            height: 40px;
+            line-height: 40px;
+            border: 1px solid red;
+            position: relative;
+            overflow: hidden;
+        }
+        .box1 ul{
+            list-style: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .box2{
+            width: 500px;
+            height: 200px;
+            margin-top: 50px;
+            line-height: 40px;
+            border: 1px solid red;
+            position: relative;
+            overflow: hidden;
+        }
+        .box2 ul{
+            list-style: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1" id="b1">
+        <ul>
+            <li>学习学习学习无法自拔</li>
+            <li>好累，打游戏打游戏</li>
+            <li>简直是个废物</li>
+        </ul>
+    </div>
+    <div class="box2" id="b2">
+        <ul>
+            <li>邱*健 北京*狐网络有线公司 16k</li>
+            <li>李*波 北京*东网络有线公司 26k</li>
+            <li>王* 北京*60网络有线公司 36k</li>
+            <li>赵* 北京*60网络有线公司 36k</li>
+            <li>马* 北京*60网络有线公司 36k</li>
+            <li>刘* 北京*60网络有线公司 36k</li>
+            <li>李* 北京*60网络有线公司 36k</li>
+            <li>李** 北京*60网络有线公司 36k</li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="../运动框架/myanimate-1.1.js"></script>
+    <script type="text/javascript" src="../运动框架/tween.js"></script>
+    <script>
+        var ul = document.getElementsByTagName("ul")[0];
+        var ul1 = document.getElementsByTagName("ul")[1];
+        var list = ul.getElementsByTagName("li");
+        var list1 = ul1.getElementsByTagName("li");
+        var listlen = list.length;
+        var listlen1 = list1.length;
+
+        var idx = 0;
+        var idx1 = 0;
+
+        ul1.innerHTML += ul1.innerHTML;
+        ul.appendChild(list[0].cloneNode(true));
+        function move(){
+            idx++;
+            animate(ul,{"top":-40*idx},800,function(){
+                if(idx>listlen-1)
+                {
+                    idx = 0;
+                    this.style.top = "0px";
+                }
+            });
+        }
+
+        function move1(){
+            idx1++;
+            animate(ul1,{"top":-40*idx1},800,function(){
+                if(idx1>listlen1-1)
+                {
+                    idx1 = 0;
+                    this.style.top = "0px";
+                }
+            });
+        }
+        setInterval(move,2000);
+        setInterval(move1,3000);
+    </script>
+    </script>
+</body>
+</html>
