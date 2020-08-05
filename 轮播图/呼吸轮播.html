@@ -39,12 +39,14 @@
         }
         .img ul li{
             position: absolute;
+            display: none;
             top: 0;
             left: 0;
             opacity: 0;
             filter: alpha(opacity = 0);
         }
         .img ul li.first{
+            display: block;
             position: absolute;
             top: 0;
             left: 0;
@@ -61,11 +63,11 @@
         </div>
         <div class="img" id="imgbox">
             <ul>
-                <li class="first"><img src="../images/0.jpg" alt=""></li>
-                <li><img src="../images/1.jpg" alt=""></li>
-                <li><img src="../images/2.jpg" alt=""></li>
-                <li><img src="../images/3.jpg" alt=""></li>
-                <li><img src="../images/4.jpg" alt=""></li>
+                <li class="first"><a href="000"><img src="../images/0.jpg" alt=""></a></li>
+                <li><a href="111"><img src="../images/1.jpg" alt=""></a></li>
+                <li><a href="222"><img src="../images/2.jpg" alt=""></a></li>
+                <li><a href="333"><img src="../images/3.jpg" alt=""></a></li>
+                <li><a href="444"><img src="../images/4.jpg" alt=""></a></li>
             </ul>
         </div>
     </div>
@@ -83,12 +85,15 @@
 
         function move(){
             if(imglist[index].isanimated) return;
-            animate(imglist[index],{"opacity": 0},1000);
+            animate(imglist[index],{"opacity": 0},1000,function(){
+                this.style.display = "none";
+            });
             index++;
             if(index>imglen)
             {
                 index = 0;
             }
+            imglist[index].style.display = "block";
             animate(imglist[index],{"opacity": 1},1000);
         }
 
@@ -98,23 +103,29 @@
                 alert(imglist[index].isanimated);
                 return;
             } 
-            animate(imglist[index],{"opacity": 0},1000);
+            animate(imglist[index],{"opacity": 0},1000,function(){
+                this.style.display = "none";
+            });
             index--;
             if(index<0)
             {
                 index = imglen;
             }
+            imglist[index].style.display = "block";
             animate(imglist[index],{"opacity": 1},1000);
 
         }
         rightbtn.onclick = function(){
             if(imglist[index].isanimated) return;
-            animate(imglist[index],{"opacity": 0},1000);
+            animate(imglist[index],{"opacity": 0},1000,function(){
+                this.style.display = "none";
+            });
             index++;
             if(index>imglen)
             {
                 index = 0;
             }
+            imglist[index].style.display = "block";
             animate(imglist[index],{"opacity": 1},1000);
         }
 
