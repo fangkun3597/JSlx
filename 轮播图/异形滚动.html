@@ -77,6 +77,7 @@
         var rightbtn = document.getElementById("rightBtn");
 
         var initJson = [];
+        var listname = [];
 
         for(var i = 0; i < imglist.length; i++)
         {
@@ -87,11 +88,26 @@
                 "top" :  parseInt(myfetchComputedStyle(imglist[i],"top")),
                 "opacity" :  parseInt(myfetchComputedStyle(imglist[i],"opacity")),
             });
+            listname.push(imglist[i]);
         }
-        console.log(initJson);
-        rightbtn.onclick = function(){
 
-        }   
+        
+        rightbtn.onclick = function(){
+            if(listname[1].isanimated) 
+            {
+                console.log(listname[1]);
+                return;
+            }
+            for(var idx = 0;idx < imglist.length-1;idx++)
+                animate(listname[idx],initJson[idx+1],1000,"BounceEaseOut");
+
+            for(var k in initJson[idx])
+            {
+                listname[idx].style[k] = initJson[0][k] + "px";
+            }
+            listname.unshift(listname.pop());
+        } 
+         
 
         function myfetchComputedStyle(element,cssstyle){
         //检测是否为IE浏览器 IE不支持getComputedStyle
