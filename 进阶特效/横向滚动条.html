@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.box{
+			width: 760px;
+			height: 150px;
+			margin: 100px auto;
+			border: 1px solid #ccc;
+			position: relative;
+		}
+        .box .imageList{
+            width: 760px;
+			height: 130px;  
+            position: absolute;
+            top: 0;
+            left: 30px;
+            overflow: hidden;
+        }
+        .box .imageList ul{
+            width: 2000px;
+            list-style: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .box .imageList ul li{
+            float: left;
+            width: 200px;
+			height: 130px;
+			margin-right: 10px;
+        }
+        .box .box1{
+			position: absolute;
+			bottom: 0;
+			left: 30px;
+			width: 700px;
+			height: 20px;
+			background-color: #2b2b2b;
+        }
+        .box .box1 .bar{
+            position: absolute;
+			top: 3px;
+			left: 0;
+			width: 50px;
+			height: 15px;
+			background: url(../images/bg07.png) 0 -32px;
+            cursor: pointer;
+        }
+        .box .box1 .p1{
+            position: absolute;
+            width:11px;
+			height: 15px;
+            background: url(../images/bg07.png);
+        }
+        .box .box1 .p2{
+            position: absolute;
+            top: 0;
+		    right: 0;
+            width: 11px;
+		    height: 15px;
+            background: url(../images/bg07.png) -24px 0;
+        }
+        .box .box1 .p3{
+            position: absolute;
+            top: 0;
+		    left: 50%;
+            width: 10px;
+		    height: 15px;
+            margin-left: -5px;
+            background: url(../images/bg07.png) -14px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box">
+        <div class="imageList" id="imageList">
+			<ul id="m_unit">
+				<li><img src="../images/number/0.png" alt="" /></li>
+				<li><img src="../images/number/1.png" alt="" /></li>
+				<li><img src="../images/number/2.png" alt="" /></li>
+				<li><img src="../images/number/3.png" alt="" /></li>
+				<li><img src="../images/number/4.png" alt="" /></li>
+				<li><img src="../images/number/5.png" alt="" /></li>
+				<li><img src="../images/number/6.png" alt="" /></li>
+				<li><img src="../images/number/7.png" alt="" /></li>
+				<li><img src="../images/number/8.png" alt="" /></li>
+            </ul>
+        </div>
+        <div class="box1">
+            <div class="bar" id="bar">
+                <span class="p1"></span>
+                <span class="p2">5</span>
+                <span class="p3">sss</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var oBar = document.getElementById("bar");
+        var oUl  = document.getElementById("m_unit");
+        var list = document.getElementById("m_unit").getElementsByTagName("li");
+                       
+        var lenth = list.length * list[0].clientWidth+10*(list.length-1);
+        console.log(lenth);
+        var rate = 700/lenth;
+        oBar.style.width = rate * 700 + "px";
+
+        oBar.onmousedown = function(event){
+            event = event || window.event;
+            var deletaX = event.clientX - oBar.offsetLeft;
+            document.onmousemove = function(event){
+                event = event || window.event;
+                var X = event.clientX - deletaX;
+                if(X<0)
+                    X = 0;
+                if(X>700-oBar.clientWidth)
+                    X=700-oBar.clientWidth;
+                oBar.style.left = X + "px";
+                oUl.style.left = - X / rate + "px";
+                return false;
+            }
+        }
+
+        document.onmouseup = function(){
+            document.onmousemove = null; 
+        }
+    </script>
+</body>
+</html>

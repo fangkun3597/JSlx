@@ -108,7 +108,20 @@
             listname.unshift(listname.pop());
         } 
          
+        leftbtn.onclick = function(){
+            if(listname[1].isanimated) 
+            {
+                return;
+            }
+            for(var idx = 0;idx < imglist.length-1;idx++)
+                animate(listname[imglist.length-1-idx],initJson[imglist.length-idx-2],1000,"BounceEaseOut");
 
+            for(var k in initJson[0])
+            {
+                listname[0].style[k] = initJson[idx][k] + "px";
+            }
+            listname.push(listname.shift());
+        } 
         function myfetchComputedStyle(element,cssstyle){
         //检测是否为IE浏览器 IE不支持getComputedStyle
         if(window.getComputedStyle)

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .body{
+            height: 5000px;
+        }
+        .div{
+            height: 2500px;
+            width: 100%;
+            background-color: bisque;
+        }
+        .div1{
+            height: 2500px;
+            width: 100%;
+            background-color:blueviolet;
+        }
+        .backbtn{
+            height: 20px;
+            width:  40px;
+            position: fixed;
+            right: 10px;
+			bottom: 30px;
+            background-color: cyan;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <input type="button" value="冲" id="btn">
+    <div class="div">
+
+    </div>
+    <div class="div1">
+
+    </div>
+    <a href="javascript:;" class="backbtn" id="backbtn">回到顶部</a>
+
+    <script type="text/javascript">
+        var btn = document.getElementById("btn");
+        var backbtn = document.getElementById("backbtn");
+
+        window.onscroll = function(){
+            var st = document.body.scrollTop || document.documentElement.scrollTop;
+            if(st>500)
+            {
+                backbtn.style.display = "block";
+            }else{
+                backbtn.style.display = "none";
+            }
+        }
+
+        backbtn.onclick = function(){
+            // document.documentElement.scrollTop = document.body.scrollTop = 0;
+            animateScorll(0,2000);
+        }
+        btn.onclick = function(){
+            console.log("他来了");
+            document.documentElement.scrollTop = document.body.scrollTop = 3000;
+        }
+
+        function animateScorll(target,time){
+            var frameNumber = 0;
+            var start = document.body.scrollTop || document.documentElement.scrollTop;
+            var distance = target - start;
+            var maxFrame = time / 10;
+
+            clearInterval(timer);
+            var timer = setInterval(function(){ 
+                frameNumber++;
+                if(frameNumber==maxFrame)
+                    clearInterval(timer);
+                console.log(frameNumber);
+                document.body.scrollTop = document.documentElement.scrollTop = 
+                CubicEaseInOut(frameNumber,start,distance,maxFrame);                
+            },10);
+        }
+
+        //t当前帧编号
+        //b起始位置
+        //c变化量
+        //d总帧数
+        //返回值：当前帧的位置
+        function CubicEaseInOut(t, b, c, d) {
+		        if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
+		        return c / 2 * ((t -= 2) * t * t + 2) + b;
+		}
+    </script>
+</body>
+</html>

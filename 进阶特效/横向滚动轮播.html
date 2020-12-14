@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 560px;
+            height: 440px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            position: relative;
+        }
+        .imglist{
+            list-style: none;
+        }
+        .bar{
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            width: 420px;
+            height: 26px;
+            margin-left: -210px;
+            background-color: rgb(138, 138, 132);
+            background: url(../workImages/6.png) repeat-x;
+            background-position: 0 -26px;
+        }
+        .L{
+            height: 26px;
+            width: 20px;
+            line-height: 26px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            background: url(../workImages/6.png) no-repeat 0 0;
+            padding-left: 20px;
+        }
+        .M{
+            height: 26px;
+            width: 325px;
+            line-height: 26px;
+            position: absolute;
+            left: 40px;
+            bottom: 0;
+            /* background-color: aqua; */
+            background: url(../workImages/6.png) repeat-x 0 -52px;
+        }
+        .R{
+            height: 26px;
+            width: 45px;
+            line-height: 26px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            background: url(../workImages/6.png) no-repeat 25px -78px;
+        }
+        .slider{
+            height: 26px;
+            width: 20px;
+            position:absolute;
+            left: 0;
+            top: 0;
+            /* background-color: aqua; */
+            background: url(../workImages/6.png) no-repeat 0px -104px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <ul class="imglist">
+            <!-- <li><img src="../workImages/0.jpg" ></li>
+            <li><img src="../workImages/1.jpg" ></li>
+            <li><img src="../workImages/2.jpg" ></li>
+            <li><img src="../workImages/3.jpg" ></li>
+            <li><img src="../workImages/4.jpg" ></li> -->
+        </ul>
+        <div class="bar" id="bar">
+            <span class="L">0°</span>
+            <span class="M" id="mid">
+                <span class="slider" id="slider"></span>
+            </span>
+            <span class="R">180°</span>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var oslid = document.getElementById("slider");
+        var omid  = document.getElementById("mid");
+
+        oslid.onmousedown = function(event){
+            var event = event || window.event;
+            var dx = event.clientX - oslid.offsetLeft;
+            // (getAllLeft(oslid) - document.documentElement.scrollLeft);
+            console.log(getAllLeft(oslid)); //110
+            console.log(dx);//2
+            console.log("s="+document.documentElement.scrollLeft);//0
+            omid.onmousemove = function(event){
+                console.log(event.clientX - dx);//110
+                oslid.style.left = (event.clientX - dx) +"px";
+            }
+        }
+        
+        function getAllLeft(obj){
+            var allLeft = obj.offsetLeft;
+            var parent = obj;
+            while(parent = parent.offsetParent)
+            {
+                allLeft += parent.offsetLeft;
+            }
+            return allLeft;
+        }
+    </script>
+</body>
+</html>
